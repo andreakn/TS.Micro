@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Timesheet.Micro.Controllers.EmployeeOverview>
+
+@{
+    ViewBag.Title = "Ansatte";
+}
+
+<div>
+    @Html.Partial("_List", Model)
+    <div>
+        @Html.ActionLink("Ny ansatt", "Create")
+    </div>
+
+    <div>
+        @Html.ActionLink("Se skjulte ansatte", "ShowHidden")
+    </div>
+</div>

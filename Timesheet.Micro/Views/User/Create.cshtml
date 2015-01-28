@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Opprett bruker</h2>
+@using (Html.BeginForm())
+{
+
+    <div class="input-group">
+        <label>brukernavn</label><input type="text" name="username" class="" />
+    </div>
+    <div class="input-group">
+        <label>Passord</label><input type="password" name="password" class="" />
+    </div>
+    <div class="input-group">
+        <label>Bekreft passord</label><input type="password" name="confirmpassword" class="" />
+    </div>
+    <div>
+        <input type="submit" value="Opprett" />
+    </div>
+}
+

@@ -1,0 +1,39 @@
+﻿@using System.Web.UI.WebControls
+@using Timesheet.Micro.Views.Shared
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/bundles/styles")
+</head>
+<body>
+    <div class="container">
+        <div class="row col-md-9" id="alerts">
+            @if (!string.IsNullOrWhiteSpace("" + TempData["Error"]))
+            {
+                <div class="alert alert-danger">
+                    <span>@Html.Raw(TempData["Error"])</span>
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace("" + TempData["Info"]))
+            {
+                <div class="alert alert-success">
+                    <span>@Html.Raw(TempData["Info"])</span>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

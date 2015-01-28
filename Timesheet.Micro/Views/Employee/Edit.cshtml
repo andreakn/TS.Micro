@@ -1,0 +1,16 @@
+﻿@model Timesheet.Micro.Models.Domain.Model.Employee
+
+@{
+    ViewBag.Title = "title";
+}
+
+
+<h2>Rediger @Model.FullName</h2>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("_Form", Model);
+
+        <input type="submit" class="btn" value="Lagre" />
+    }
+</div>

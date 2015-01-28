@@ -1,0 +1,56 @@
+﻿@using Timesheet.Micro.Models.Domain.Model
+@model Timesheet.Micro.Models.Domain.Model.Employee
+
+
+<input type="hidden" name="Id" value="@Model.Id"/>
+<input type="hidden" name="UserId" value="@Model.UserId"/>
+<div class="form-group">
+    @Html.LabelFor(x => x.IsActive, "Aktiv ansatt")
+    @Html.CheckBoxFor(x => x.IsActive)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x=>x.FirstName,"Fornavn")
+    @Html.TextBoxFor(x => x.FirstName)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.LastName, "Etternavn")
+    @Html.TextBoxFor(x => x.LastName)
+</div>
+<div class="form-group">
+    @Html.Label("Roles", "Roller i systemet")
+    @foreach (var role in Enum.GetValues(typeof(RoleType)).Cast<RoleType>())
+    {
+        <div class="indent">
+            <label class="roleInput">
+                <input type="checkbox" name='@("role_"+role)' checked="@(Model.HasRole(role))" data-rolevalue="@((int)role)"/>
+                @role.GetText()
+            </label>
+        </div>
+    }
+    <input type="hidden" name="Roles" id="roles" value="@Model.Roles"/>
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.StartDate, "Oppstartsdato")
+    <input type="date" name="StartDate" value="@Model.StartDate"/>
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.EndDate, "Sluttet dato")
+    <input type="date" name="StartDate" value="@Model.StartDate"/>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.roleInput input').change(function() {
+            recalculateRoles();
+        });
+    });
+    function recalculateRoles() {
+        var sum = 0;
+        $('.roleInput input').each(function() {
+            if ($(this).prop('checked')) {
+                sum += parseInt($(this).data('rolevalue'));
+            }
+        });
+        $('#roles').val(sum);
+    }
+</script>

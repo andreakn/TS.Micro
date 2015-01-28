@@ -1,0 +1,11 @@
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Timesheet.Micro.Migrations.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Timesheet.Micro.Migrations.pdb
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Migrator.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Migrator.Framework.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Migrator.Providers.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\MySql.Data.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Npgsql.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\bin\Mono.Security.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\obj\Debug\Timesheet.Micro.Migrations.csprojResolveAssemblyReference.cache
+C:\code\TS.Micro\Timesheet.Micro.Migrations\obj\Debug\Timesheet.Micro.Migrations.dll
+C:\code\TS.Micro\Timesheet.Micro.Migrations\obj\Debug\Timesheet.Micro.Migrations.pdb

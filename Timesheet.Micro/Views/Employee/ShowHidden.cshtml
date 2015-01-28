@@ -1,0 +1,13 @@
+﻿@model System.Collections.Generic.List<Timesheet.Micro.Controllers.EmployeeOverview>
+
+@{
+    ViewBag.Title = "Skjulte / gamle ansatte";
+}
+<div>
+    @Html.Partial("_List", Model)
+   
+
+    <div>
+        @Html.ActionLink("Se aktive ansatte", "Index")
+    </div>
+</div>

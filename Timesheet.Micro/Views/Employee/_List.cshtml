@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Timesheet.Micro.Controllers.EmployeeOverview>
+
+<ul id="employeeList">
+    @foreach (var overview in Model)
+    {
+        <li>
+            [@Html.ActionLink("Rediger", "Edit", new {id = overview.Employee.Id}, new {})]
+            [@Html.ActionLink("Lås opp timer", "UnlockHours", new {id = overview.Employee.Id}, new {})]
+            @overview.Employee.FullName
+            (<a href="javascript:toggleProjects(@overview.Employee.Id)">@overview.ProjectMemberships.Count prosjekter</a>)
+            <div class="projectOverview" data-id="@overview.Employee.Id" style="display: none;">
+                <ul>
+                    @foreach (var membership in overview.ProjectMemberships.Keys)
+                    {
+                        var project = overview.ProjectMemberships[membership];
+                        <li>@Html.ActionLink(project.Name, "Edit", "Project", new {id = project.Id}, new {}): @(membership.HourlyRate ?? project.ProjectHourlyRate ?? 0) kr/time</li>
+                    }
+                </ul>
+
+            </div>
+        </li>
+    }
+</ul>
+<script>
+    function toggleProjects(id) {
+        $('.projectOverview[data-id=' + id + ']').toggle();
+    }
+
+</script>

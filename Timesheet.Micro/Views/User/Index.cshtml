@@ -1,0 +1,13 @@
+﻿@model List<Timesheet.Micro.Models.Domain.Model.User>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Brukere</h2>
+<ul>
+    @foreach (var user in Model)
+    {
+        <li>@Html.ActionLink(user.Username,"SetPassword",new{username=user.Username},new{})</li>
+    }
+    @Html.ActionLink("Opprett bruker", "Create")
+</ul>
