@@ -8,5 +8,6 @@ namespace Timesheet.Micro.Data.Repos
         //IEnumerable<Address> GetAddresses(Customer customer);
         //IEnumerable<AddressType> GetAddressTypes();
         //IEnumerable<Contact> GetContacts(Customer customer);
+        IEnumerable<Customer> GetAllInactive();
     }
 }

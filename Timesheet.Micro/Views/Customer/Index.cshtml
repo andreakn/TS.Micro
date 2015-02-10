@@ -1,0 +1,16 @@
+﻿@model List<Timesheet.Micro.Models.Viewmodels.CustomerOverview>
+@{
+    ViewBag.Title = "Kunder";
+}
+
+<div>
+    @Html.ActionLink("Opprett ny kunde", "Create")
+</div>
+@Html.Partial("_List", Model)
+<div>
+    @Html.ActionLink("Opprett ny kunde", "Create")
+</div>
+
+<div>
+    @Html.ActionLink("Se skjulte kunder", "ShowHidden")
+</div>

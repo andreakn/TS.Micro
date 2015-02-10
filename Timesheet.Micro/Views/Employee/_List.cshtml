@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<Timesheet.Micro.Controllers.EmployeeOverview>
 
-<ul id="employeeList">
+<ul id="employeeList" class="list-group">
     @foreach (var overview in Model)
     {
-        <li>
-            [@Html.ActionLink("Rediger", "Edit", new {id = overview.Employee.Id}, new {})]
-            [@Html.ActionLink("Lås opp timer", "UnlockHours", new {id = overview.Employee.Id}, new {})]
+        <li class="list-group-item">
+            [@Html.ActionLink("Rediger", "Edit", new { id = overview.Employee.Id }, new { })]
+            [@Html.ActionLink("Lås opp timer", "UnlockHours", new { id = overview.Employee.Id }, new { })]
             @overview.Employee.FullName
             (<a href="javascript:toggleProjects(@overview.Employee.Id)">@overview.ProjectMemberships.Count prosjekter</a>)
             <div class="projectOverview" data-id="@overview.Employee.Id" style="display: none;">
-                <ul>
+                <ul class="list-group">
                     @foreach (var membership in overview.ProjectMemberships.Keys)
                     {
                         var project = overview.ProjectMemberships[membership];
-                        <li>@Html.ActionLink(project.Name, "Edit", "Project", new {id = project.Id}, new {}): @(membership.HourlyRate ?? project.ProjectHourlyRate ?? 0) kr/time</li>
+                        <li class="list-group-item">@Html.ActionLink(project.Name, "Edit", "Project", new { id = project.Id }, new { }): @(membership.HourlyRate ?? project.ProjectHourlyRate ?? 0) kr/time</li>
                     }
                 </ul>
 

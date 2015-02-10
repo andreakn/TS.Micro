@@ -9,6 +9,10 @@ namespace Timesheet.Micro.Data.Repos
 {
     public class CustomerRepository: BaseRepo<Customer>, ICustomerRepository
     {
-       
+        public IEnumerable<Customer> GetAllInactive()
+        {
+            using (var conn = GetConn()) { return conn.Query<Customer>("select * from Customers where IsActive = 0"); }
+        }
+
     }
 }

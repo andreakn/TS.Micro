@@ -1,0 +1,41 @@
+﻿@model List<Timesheet.Micro.Models.Viewmodels.CustomerOverview>
+
+<ul id="customerList" class="list-group">
+    @foreach (var overview in Model)
+    {
+        <li class="list-group-item" data-filter="@overview.GetFilter()">
+            [@Html.ActionLink("Rediger", "Edit", new { id = overview.Customer.Id }, new { })]
+            @overview.Customer.Name
+            (<a href="javascript:toggleProjects(@overview.Customer.Id)">@overview.Projects.Count prosjekter</a>)
+            <div class="customerOverview" data-id="@overview.Customer.Id" style="display: none;">
+                <ul class="list-group">
+                    @foreach (var project in overview.Projects)
+                    {
+                        <li class="list-group-item" data-filter="@project.GetFilter()">
+                            [@Html.ActionLink("Rediger", "Edit", new { id = project.Project.Id }, new { })]
+                            @project.Project.Name 
+                            (<a href="javascript:toggleWorkers(@project.Project.Id)">@project.Workers.Count konsulenter</a>)
+                            <div class="projectOverview" data-id="@project.Project.Id" style="display: none;">
+                                <ul class="list-group">
+                                    @foreach (var worker in project.Workers)
+                                    {
+                                        <li class="list-group-item">
+                                          @Html.ActionLink(worker.EmployeeName, "Edit", "Employee", new {id = worker.Employee.Id}, new {}): @worker.HourlyRate kr/time
+
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </li>
+    }
+</ul>
+<script>
+    function toggleProjects(id) {$('.customerOverview[data-id=' + id + ']').toggle();}
+    function toggleWorkers(id) {$('.projectOverview[data-id=' + id + ']').toggle();}
+
+</script>

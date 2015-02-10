@@ -1,0 +1,12 @@
+﻿@model List<Timesheet.Micro.Models.Viewmodels.CustomerOverview>
+@{
+    ViewBag.Title = "Skjulte / inaktive kunder";
+}
+
+<div>
+    @Html.Partial("_List", Model)
+
+    <div>
+        @Html.ActionLink("Se aktive kunder", "Index")
+    </div>
+</div>
