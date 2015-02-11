@@ -59,6 +59,7 @@
     <Compile Include="Migrations\M010_PublicHolidays.cs" />
     <Compile Include="Migrations\M011_ProjectTimeRate.cs" />
     <Compile Include="Migrations\M013_EmployeeRoles_Simpler.cs" />
+    <Compile Include="Migrations\M015_SimplifyCustomer.cs" />
     <Compile Include="Migrations\M014_SimplifyEmployee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

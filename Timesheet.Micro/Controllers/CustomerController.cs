@@ -13,13 +13,15 @@ namespace Timesheet.Micro.Controllers
         private IProjectMemberRepository projectMemberRepository;
         private IProjectRepository projectRepository;
         private IEmployeeRepository employeeRepository;
+        private ViewModelAssembler assembler;
 
-        public CustomerController(ICustomerRepository customerRepo, IProjectMemberRepository projectMemberRepository, IProjectRepository projectRepository, IEmployeeRepository employeeRepository)
+        public CustomerController(ICustomerRepository customerRepo, IProjectMemberRepository projectMemberRepository, IProjectRepository projectRepository, IEmployeeRepository employeeRepository, ViewModelAssembler viewModelAssembler)
         {
             this.customerRepo = customerRepo;
             this.projectMemberRepository = projectMemberRepository;
             this.projectRepository = projectRepository;
             this.employeeRepository = employeeRepository;
+            this.assembler = viewModelAssembler;
         }
 
         public ActionResult Index()
@@ -29,7 +31,7 @@ namespace Timesheet.Micro.Controllers
             var projects = projectRepository.GetAllActive();
             var employees = employeeRepository.GetAllActive();
 
-            var viewmodel = AssembleCustomerOverviews(customers, projects, projectMembers, employees);
+            var viewmodel = assembler.AssembleCustomerOverviews(customers, projects, projectMembers, employees);
 
             return View(viewmodel);
         }
@@ -40,50 +42,46 @@ namespace Timesheet.Micro.Controllers
             var projects = projectRepository.GetAllActive();
             var employees = employeeRepository.GetAllActive();
 
-            var viewmodel = AssembleCustomerOverviews(customers, projects, projectMembers, employees);
+            var viewmodel = assembler.AssembleCustomerOverviews(customers, projects, projectMembers, employees);
 
             return View(viewmodel);
         }
 
-        private List<CustomerOverview> AssembleCustomerOverviews(IEnumerable<Customer> customers, IEnumerable<Project> projects, IEnumerable<ProjectMember> projectMembers, IEnumerable<Employee> employees)
+        public ActionResult Create()
         {
-            var ret = new List<CustomerOverview>();
-            foreach (var customer in customers)
-            {
-                var customerRet = new CustomerOverview{Customer = customer};
-                customerRet.Projects.AddRange(AssembleProjectOverviews(customer,projects,projectMembers,employees));
-                ret.Add(customerRet);
-            }
-            return ret;
+            var customer = new Customer();
+            customer.IsActive = true;
+            return View(customer);
         }
 
-        private IEnumerable<ProjectOverview> AssembleProjectOverviews(Customer customer, IEnumerable<Project> projects, IEnumerable<ProjectMember> projectMembers, IEnumerable<Employee> employees)
+        public ActionResult Edit(int id)
         {
-            var ret = new List<ProjectOverview>();
-            var relevantProjects = projects.Where(p => p.CustomerId == customer.Id);
-            foreach (var project in relevantProjects)
-            {
-                var item = new ProjectOverview {Project = project};
-                item.Workers.AddRange(AssembleProjectWorkers(project,projectMembers,employees));
-
-                ret.Add(item);
-            }
-
-            return ret;
+            var customer = customerRepo.GetById(id);
+            return View(customer);
         }
 
-        private IEnumerable<ProjectWorker> AssembleProjectWorkers(Project project, IEnumerable<ProjectMember> projectMembers, IEnumerable<Employee> employees)
+        [HttpPost]
+        public ActionResult Create(Customer customer )
         {
-            var ret = new List<ProjectWorker>();
-            var relevantMembers = projectMembers.Where(m => m.ProjectId == project.Id);
-            foreach (var member in relevantMembers)
-            {
-                var worker = new ProjectWorker {ProjectMember = member, Project = project};
-                worker.Employee = employees.FirstOrDefault(e => e.Id == member.EmployeeId);
-                ret.Add(worker);
-            }
-
-            return ret.Where(w=>w.IsComplete);
+            customerRepo.Save(customer);
+            Info("Lagret ny kunde: " + customer.Name);
+            return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult Edit(Customer customer)
+        {
+            customerRepo.Save(customer);
+            Info("Oppdaterte kunde: " + customer.Name);
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+
+
+
     }
 }

