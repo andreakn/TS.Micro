@@ -6,7 +6,7 @@
         <li class="list-group-item" data-filter="@overview.GetFilter()">
             [@Html.ActionLink("Rediger", "Edit", new { id = overview.Customer.Id }, new { })]
             @overview.Customer.Name
-            (<a href="javascript:toggleProjects(@overview.Customer.Id)">@overview.Projects.Count prosjekter</a>)
+            (<a href="javascript:toggleProjects(@overview.Customer.Id)">@overview.Projects.Count prosjekter</a>)  [@Html.ActionLink("+","Create","Project",new{CustomerId=overview.Customer.Id},new{})]
             <div class="customerOverview" data-id="@overview.Customer.Id" style="display: none;">
                 <ul class="list-group">
                     @foreach (var project in overview.Projects)

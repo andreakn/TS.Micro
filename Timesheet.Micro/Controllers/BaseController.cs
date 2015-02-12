@@ -15,10 +15,19 @@ namespace Timesheet.Micro.Controllers
             AppendTempDataMessage(message, "Info");
         }
 
+        protected void Info(string messageTemplate, params object[] p)
+        {
+            Info(string.Format(messageTemplate,p));
+        }
+
         protected void Error(string message)
         {
             ErrorMessages.Add(message);
             AppendTempDataMessage(message, "Error");
+        }
+        protected void Error(string messageTemplate, params object[] p)
+        {
+            Error(string.Format(messageTemplate, p));
         }
 
         private void AppendTempDataMessage(string message, string severity)

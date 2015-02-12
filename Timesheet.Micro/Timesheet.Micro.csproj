@@ -145,6 +145,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\Repos\BaseRepo.cs" />
     <Compile Include="Data\Repos\CustomerRepository.cs" />
@@ -282,6 +283,7 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
