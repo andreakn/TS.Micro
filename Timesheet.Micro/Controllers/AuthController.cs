@@ -28,8 +28,14 @@ namespace Timesheet.Micro.Controllers
 
 
 
-        public ActionResult Login(string username)
+        public ActionResult Login(string requestUrl)
         {
+            if (!string.IsNullOrEmpty(requestUrl) 
+                && !requestUrl.StartsWith("/Auth", StringComparison.InvariantCultureIgnoreCase)
+                && !requestUrl.ToLowerInvariant().Contains("browserlink"))
+            {
+                Session["requestUrl"] = requestUrl;
+            }
             return View();
         }
 
@@ -43,6 +49,11 @@ namespace Timesheet.Micro.Controllers
                     //log in user
                     FormsAuthentication.SetAuthCookie(username, true);
                     Info("Logget inn som " + username);
+                    var requestUrl = Session["requestUrl"] as string;
+                    if (!string.IsNullOrEmpty(requestUrl))
+                    {
+                        return Redirect(requestUrl);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 else

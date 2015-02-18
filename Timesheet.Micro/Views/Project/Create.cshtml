@@ -1,0 +1,14 @@
+﻿@model Timesheet.Micro.Models.Viewmodels.ProjectEditModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Opprett prosjekt under kunde @Model.Customer.Name</h2>
+<div>
+    @using (Html.BeginForm("Create","Project"))
+    {
+        @Html.Partial("_Form", Model);
+
+        <input type="submit" class="btn" />
+    }
+</div>

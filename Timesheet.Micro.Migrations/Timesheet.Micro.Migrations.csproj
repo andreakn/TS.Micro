@@ -61,6 +61,7 @@
     <Compile Include="Migrations\M013_EmployeeRoles_Simpler.cs" />
     <Compile Include="Migrations\M015_SimplifyCustomer.cs" />
     <Compile Include="Migrations\M014_SimplifyEmployee.cs" />
+    <Compile Include="Migrations\M016_SimplifyProjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

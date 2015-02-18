@@ -1,0 +1,51 @@
+﻿@model List<Timesheet.Micro.Models.Viewmodels.CustomerOverview>
+
+<ul id="customerList" class="list-group">
+    @foreach (var overview in Model.Where(x=>x.Projects.Count>0).OrderBy(m=>m.Customer.Name))
+    {
+        <li class="list-group-item" data-filter="@overview.GetFilter()">
+            @overview.Customer.Name
+             [@Html.ActionLink("+ legg til prosjekt","Create","Project",new{CustomerId=overview.Customer.Id},new{})]
+            <div class="customerOverview" data-id="@overview.Customer.Id" style="display: block;">
+                <ul class="list-group">
+                    @foreach (var project in overview.Projects)
+                    {
+                        <li class="list-group-item" data-filter="@project.GetFilter()">
+                            <form action="/Project/SetIsActive" style="display: inline;" method="POST">
+                                [<a href="javascript:void(0)" onclick="clickSiblingSubmit(this); return false;">Sett til @project.Project.GetToggleActiveStateText()</a>]
+                                <input type="hidden" name="id" value="@project.Project.Id"/>
+                                <input type="hidden" name="newValue" value="@( (!project.Project.IsActive).ToString())"/>
+                                <input type="submit" style="display: none;"/>
+                            </form>
+                         [@Html.ActionLink("Rediger", "Edit","Project", new { id = project.Project.Id }, new { })]
+                            @project.Project.Name
+                            (<a href="javascript:toggleWorkers(@project.Project.Id)">@project.Workers.Count konsulenter</a>
+                            @if (project.Project.IsAvailableToAll)
+                            {
+                                <text> - tilgjengelig for alle</text>
+                            }
+                            )
+                            <div class="projectOverview" data-id="@project.Project.Id" style="display: none;">
+                                <ul class="list-group">
+                                    @foreach (var worker in project.Workers)
+                                    {
+                                        <li class="list-group-item">
+                                          @Html.ActionLink(worker.EmployeeName, "Edit", "Employee", new {id = worker.Employee.Id}, new {}): @worker.HourlyRate kr/time
+
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </li>
+    }
+</ul>
+<script>
+    function toggleProjects(id) {$('.customerOverview[data-id=' + id + ']').toggle();}
+    function toggleWorkers(id) {$('.projectOverview[data-id=' + id + ']').toggle();}
+
+</script>

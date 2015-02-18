@@ -59,7 +59,9 @@ namespace Timesheet.Micro.Data.Repos
                 }
                 else
                 {
-                    conn.Execute(string.Format("insert into {0} ({1}) VALUES ({2})", TableName, GetColNames(entity), GetParams(entity)), entity);
+                    var id = conn.ExecuteScalar<int>(string.Format("insert into {0} ({1}) VALUES ({2});select @@Identity as 'id'", TableName, GetColNames(entity), GetParams(entity)), entity);
+                    if (id == 0) throw new Exception("Fikk ikke satt ID ved lagring");
+                    entity.Id = id;
                 }
             }
         }

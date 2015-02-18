@@ -1,0 +1,92 @@
+﻿@using Timesheet.Micro.Models.Domain.Model
+@using Timesheet.Micro.Models.Extensions
+@model Timesheet.Micro.Models.Viewmodels.ProjectEditModel
+
+<div class="col-md-6">
+
+    @Html.Hidden("model.Project.CustomerId", Model.Project.CustomerId)
+    @Html.Hidden("model.Project.Id", Model.Project.Id)
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.IsActive, "Aktivt prosjekt")
+        @Html.CheckBox("model.Project.IsActive", Model.Project.IsActive)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.IsBillable, "Fakturerbart prosjekt")
+        @Html.CheckBox("model.Project.IsBillable", Model.Project.IsBillable)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.IsAvailableToAll, "Tilgjengelig for alle ansatte")
+        @Html.CheckBox("model.Project.IsAvailableToAll", Model.Project.IsAvailableToAll)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.Name, "Prosjektnavn")
+        @Html.TextBox("model.Project.Name", Model.Project.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.Description, "Beskrivelse")
+        @Html.TextArea("model.Project.Description", Model.Project.Description)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.InvoiceGuidance, "Fakturainfo")
+        @Html.TextArea("model.Project.InvoiceGuidance", Model.Project.InvoiceGuidance)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.ProjectHourlyRate, "Standard timepris")
+        @Html.TextBox("model.Project.ProjectHourlyRate", Model.Project.ProjectHourlyRate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Project.ProjectType, "Prosjektnavn")
+        <select name="model.Project.ProjectType">
+            <option value="@ProjectType.HourlyBilled" @Model.Project.SelectedIfTypeMatch(ProjectType.HourlyBilled)>@ProjectType.HourlyBilled.GetDescription()</option>
+            <option value="@ProjectType.FixedPrice" @Model.Project.SelectedIfTypeMatch(ProjectType.FixedPrice)>@ProjectType.FixedPrice.GetDescription()</option>
+            <option value="@ProjectType.InternalProject" @Model.Project.SelectedIfTypeMatch(ProjectType.InternalProject)>@ProjectType.InternalProject.GetDescription()</option>
+            <option value="@ProjectType.TargetPrice" @Model.Project.SelectedIfTypeMatch(ProjectType.TargetPrice)>@ProjectType.TargetPrice.GetDescription()</option>
+        </select>
+    </div>
+</div>
+<div class="col-md-6">
+    <h3>Konsulenter</h3>
+    <div id="consultants">
+        @for (int i = 0; i < Model.ProjectMembers.Count; i++)
+        {
+            var member = Model.ProjectMembers[i];
+            <div class="projectMember form-group data-id='@member.Id'">
+                @Html.Hidden("model.ProjectMembers[" + i + "].Id", member.Id)
+                @Html.Hidden("model.ProjectMembers[" + i + "].ProjectId", member.ProjectId)
+                @Html.Hidden("model.ProjectMembers[" + i + "].EmployeeId", member.EmployeeId)
+                <span class="employeeName">@Model.GetEmployee(member.EmployeeId).FullName</span>
+                <span class="employeeIsActive">@Html.CheckBox("model.ProjectMembers[" + i + "].IsActive", member.IsActive)</span>
+                <span class="employeeRate">@Html.TextBox("model.ProjectMembers[" + i + "].HourlyRate", member.HourlyRate)</span>
+            </div>
+        }
+    </div>
+    <a href="javascript:addMember()">+ Legg til konsulent</a>
+    <input type="hidden" value="@Model.ProjectMembers.Count" id="projectMemberCount"/>
+    <div id="projectMemberTemplate">
+        <div class="projectMember form-group projectMemberTemplate" style="display: none;">
+            @Html.Hidden("model.ProjectMembers[X].ProjectId", Model.Project.Id)
+            <span class="employeeName">@Html.DropDownList("model.ProjectMembers[X].EmployeeId", Model.AllactiveEmployees.ToSelectListItems(), new { })</span>
+            <span class="employeeIsActive">@Html.CheckBox("model.ProjectMembers[X].IsActive", true)</span>
+            <span class="employeeRate">@Html.TextBox("model.ProjectMembers[X].HourlyRate", "")</span>
+        </div>
+    </div>
+</div>
+<script>
+    function addMember() {
+        var clone = $('#projectMemberTemplate > div').clone();
+        var newIdNumber = parseInt($('#projectMemberCount').val());
+        $('input,select', clone).each(function() {
+            var me = $(this);
+            me.prop('id', me.prop('id').replace('X', newIdNumber));
+            me.prop('name', me.prop('name').replace('X', newIdNumber));
+        });
+        $('#consultants').append(clone);
+        clone.show();
+        clone = undefined;
+        $('#projectMemberCount').val(newIdNumber + 1);
+    }
+</script>
+
+
+

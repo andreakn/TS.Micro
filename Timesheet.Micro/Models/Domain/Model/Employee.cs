@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Timesheet.Micro.Models.Domain.Model
 {
@@ -47,5 +49,24 @@ namespace Timesheet.Micro.Models.Domain.Model
         {
             return (Roles & ((int) role)) == (int)role;
         }
+    }
+
+    public static class ListExtension
+    {
+        public static IEnumerable<SelectListItem> ToSelectListItems(this IEnumerable<Employee> employees, bool includeNoValue=true, Employee selectedEmployee = null)
+        {
+            var list = employees.Select(e => new SelectListItem
+                                         {
+                                             Text = e.FullName,
+                                             Value = "" + e.Id,
+                                             Selected = selectedEmployee != null && selectedEmployee.Id == e.Id
+                                         }).ToList();
+            if (includeNoValue)
+            {
+                list.Insert(0,new SelectListItem{Text="-- Velg konsulent --",Value = ""});
+            }
+            return list;
+
+        } 
     }
 }

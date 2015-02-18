@@ -36,10 +36,11 @@ namespace Timesheet.Micro
 
         private void RedirectToLoginIfNecessary()
         {
-            var authFreeZones = new[] {"/Auth", "/Content", "/Scripts", "/fonts","/bundles","/_browserlink"};
+            var authFreeZones = new[] {"/Auth", "/Content", "/Scripts", "/fonts","/bundles","/_browserlink","/glimpse.axd"};
+            var requestedPath = HttpContext.Current.Request.Path;
             if (
                 authFreeZones.Any(
-                    z => HttpContext.Current.Request.Path.StartsWith(z, StringComparison.InvariantCultureIgnoreCase)))
+                    z => requestedPath.StartsWith(z, StringComparison.InvariantCultureIgnoreCase)))
             {
                 return;
             }
@@ -48,7 +49,7 @@ namespace Timesheet.Micro
             var username = System.Web.HttpContext.Current.User.Identity.Name;
             if (string.IsNullOrWhiteSpace(username))
             {
-                Response.Redirect("~/Auth");
+                Response.Redirect("~/Auth/Login?requestUrl="+requestedPath);
                 return;
             }
             var currentUser = Session[Constants.SESSIONKEY_USER] as User;

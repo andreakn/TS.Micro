@@ -6,3 +6,8 @@ $('.submitOnEnter').keydown(function (event) {
         return false;
     }
 });
+
+function clickSiblingSubmit(link) {
+     var me = $(link);
+    me.siblings('input[type="submit"]').click();
+}

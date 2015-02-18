@@ -130,3 +130,6 @@ C:\Andreas\tempcode\TS.Micro\Timesheet.Micro\bin\System.Web.WebPages.Razor.xml
 C:\Andreas\tempcode\TS.Micro\Timesheet.Micro\obj\Debug\Timesheet.Micro.csprojResolveAssemblyReference.cache
 C:\Andreas\tempcode\TS.Micro\Timesheet.Micro\obj\Debug\Timesheet.Micro.dll
 C:\Andreas\tempcode\TS.Micro\Timesheet.Micro\obj\Debug\Timesheet.Micro.pdb
+C:\code\TS.Micro\TS.Micro\Timesheet.Micro\bin\Glimpse.AspNet.dll
+C:\code\TS.Micro\TS.Micro\Timesheet.Micro\bin\Glimpse.Core.dll
+C:\code\TS.Micro\TS.Micro\Timesheet.Micro\bin\Glimpse.Mvc5.dll

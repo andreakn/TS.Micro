@@ -1,0 +1,15 @@
+﻿@model List<Timesheet.Micro.Models.Viewmodels.CustomerOverview>
+@{
+    ViewBag.Title = "Prosjekter";
+}
+
+<div>
+    @Html.ActionLink("Se skjulte prosjekter", "ShowHidden")
+</div>
+@Html.Partial("_List", Model)
+<div>
+</div>
+
+<div>
+    @Html.ActionLink("Se skjulte prosjekter", "ShowHidden")
+</div>

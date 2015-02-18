@@ -19,8 +19,20 @@ namespace Timesheet.Micro.Models.Domain.Model
         public virtual double? ProjectHourlyRate { get; set; }
         public override IEnumerable<string> FieldsToSave()
         {
-            return new[] { "CustomerId", "ProjectType", "ExternalProjectCode", "Name", "Description", "InvoiceGuidance", "IsActive", 
-                "IsBillable","IsAvailableToAll","EstimateDuration","CompletionDate","ProjectHourlyRate" };
+            return new[] { "CustomerId", "ProjectType", "Name", "Description", "InvoiceGuidance", "IsActive", 
+                "IsBillable","IsAvailableToAll","ProjectHourlyRate" };
+        }
+
+        public string SelectedIfTypeMatch(ProjectType someType)
+        {
+            if (someType == ProjectType) return "selected";
+            return "";
+        }
+
+        public string GetToggleActiveStateText()
+        {
+            if (IsActive) return "inaktiv";
+            return "aktiv";
         }
     }
 }
