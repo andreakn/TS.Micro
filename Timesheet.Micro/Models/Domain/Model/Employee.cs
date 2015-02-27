@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Timesheet.Micro.Models.Extensions;
 
 namespace Timesheet.Micro.Models.Domain.Model
 {
@@ -30,6 +31,18 @@ namespace Timesheet.Micro.Models.Domain.Model
                 return FirstName + " " + LastName;
             }
         }
+
+        public string LastLockedClass
+        {
+            get
+            {
+                var lastDayOfLastMonth = DateTime.Now.FirstDateOfMonth().AddDays(-1);
+                if (LastLockedHours >= lastDayOfLastMonth)
+                    return "locked-ok";
+                return "locked-not-ok";
+            }
+        }
+
         public static Employee Dummy()
         {
              return new Employee() {FirstName = "ukjent", LastName = "ukjent"}; 

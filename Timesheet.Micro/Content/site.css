@@ -35,3 +35,10 @@ textarea {
 .freeTextFiltered {
     display: none;
 }
+
+.locked-ok {
+    color: #006400;
+}
+.locked-not-ok {
+    color: #8b0000;
+}

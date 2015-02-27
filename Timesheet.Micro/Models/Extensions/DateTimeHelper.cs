@@ -42,6 +42,18 @@ namespace Timesheet.Micro.Models.Extensions
             return date.ToString("dddd", CultureInfo.CurrentCulture).ToProperCase().Substring(0, 3);
         }
 
+        public static string ToFriendly(this DateTime? date)
+        {
+            if(date.HasValue)
+                return date.Value.ToFriendly();
+            return "?";
+        }
+
+        public static string ToFriendly(this DateTime date)
+        {
+           return date.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+        }
+
         public static string ToShortDate(this DateTime? date)
         {
             if (date != null)

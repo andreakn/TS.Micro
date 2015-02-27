@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Timesheet.Micro.Data.Repos;
 using Timesheet.Micro.Models.Domain.Model;
+using Timesheet.Micro.Models.Extensions;
 using Timesheet.Micro.Models.Utils;
 
 namespace Timesheet.Micro.Controllers
@@ -13,6 +14,11 @@ namespace Timesheet.Micro.Controllers
     {
         public Employee Employee{ get; set; }
         public Dictionary<ProjectMember,Project> ProjectMemberships { get; set; }
+
+        public string GetFilter()
+        {
+            return (Employee.FullName + " " + string.Join(" ",ProjectMemberships.Select(pm => pm.Value.Name))).ToLowerInvariant();
+        }
     }
 
     public class EmployeeController : BaseController
@@ -122,6 +128,19 @@ namespace Timesheet.Micro.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        [HttpPost]
+        public ActionResult UnlockHours1Month(int id)
+        {
+            var emp = _employeeRepo.GetById(id);
+            var lastLockedHours = emp.LastLockedHours ?? DateTime.Now;
+
+            var newLastLockedHours = lastLockedHours.AddMonths(-1);
+            emp.LastLockedHours = newLastLockedHours;
+            _employeeRepo.Save(emp);
+            Info("Låste timer for {0} tilbakestilt til {1}",emp.FullName,newLastLockedHours.ToFriendly());
+
+            return RedirectToAction("Index");
+        }   
+
     }
 }

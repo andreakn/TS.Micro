@@ -1,13 +1,21 @@
-﻿@model IEnumerable<Timesheet.Micro.Controllers.EmployeeOverview>
+﻿@using Timesheet.Micro.Models.Extensions
+@model IEnumerable<Timesheet.Micro.Controllers.EmployeeOverview>
 
 <ul id="employeeList" class="list-group">
     @foreach (var overview in Model)
     {
-        <li class="list-group-item">
+        <li class="list-group-item" data-filter="@overview.GetFilter()">
             [@Html.ActionLink("Rediger", "Edit", new { id = overview.Employee.Id }, new { })]
-            [@Html.ActionLink("Lås opp timer", "UnlockHours", new { id = overview.Employee.Id }, new { })]
             @overview.Employee.FullName
             (<a href="javascript:toggleProjects(@overview.Employee.Id)">@overview.ProjectMemberships.Count prosjekter</a>)
+            - Sist låst: <span class="@overview.Employee.LastLockedClass">@overview.Employee.LastLockedHours.ToFriendly()</span>
+
+            <form action="/Employee/UnlockHours1Month" style="display: inline;" method="POST">
+                [<a href="javascript:void(0)" onclick="clickSiblingSubmit(this); return false;">Lås opp 1 mnd</a>]
+                <input type="hidden" name="id" value="@overview.Employee.Id" />
+                <input type="submit" style="display: none;" />
+            </form>
+
             <div class="projectOverview" data-id="@overview.Employee.Id" style="display: none;">
                 <ul class="list-group">
                     @foreach (var membership in overview.ProjectMemberships.Keys)
